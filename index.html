@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RedAct protects public agent execution traces from procedural skill extraction while preserving audit evidence.">
+  <title>RedAct | Protected Trace Release for Agent Skills</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="#top">RedAct</a>
+    <nav>
+      <a href="#problem">Problem</a>
+      <a href="#method">Method</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#results">Results</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-bg" src="assets/fig2_pipeline.png" alt="RedAct protected trace release pipeline overview">
+      <div class="hero-scrim"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Protected trace release for tool-using agents</p>
+        <h1 id="hero-title">RedAct</h1>
+        <p class="subtitle">Redacting Agent Capability Traces for Procedural Skill Protection</p>
+        <p class="hero-copy">RedAct releases auditable agent traces while reducing leakage of reusable procedures: formulas, thresholds, tool choices, validation routines, and recovery strategies.</p>
+        <div class="hero-actions" aria-label="Project links">
+          <a class="button primary" href="../RedAct/README.md">Code</a>
+          <a class="button" href="#paper">Paper</a>
+          <a class="button" href="#citation">Cite</a>
+        </div>
+      </div>
+      <div class="metric-strip" aria-label="Paper headline statistics">
+        <div><strong>75</strong><span>long-horizon tasks</span></div>
+        <div><strong>154</strong><span>curated skills</span></div>
+        <div><strong>7</strong><span>domains</span></div>
+        <div><strong>37-48%</strong><span>less recovered protected information</span></div>
+      </div>
+    </section>
+
+    <section id="problem" class="section intro-grid">
+      <div>
+        <p class="eyebrow">The tension</p>
+        <h2>Agent traces are audit logs and attack surfaces.</h2>
+      </div>
+      <div class="text-stack">
+        <p>Execution traces show what a deployed agent did: tool calls, intermediate decisions, failures, recovery steps, and final outputs. They are useful for transparency and debugging.</p>
+        <p>The same traces can expose reusable private skills. A downstream method may recover proprietary formulas, calibrated thresholds, workflow dependencies, and validation routines without access to model weights or original skill files.</p>
+      </div>
+    </section>
+
+    <section class="figure-band" aria-labelledby="motivation-title">
+      <div class="figure-copy">
+        <p class="eyebrow">Black-box trace disclosure</p>
+        <h2 id="motivation-title">Raw traces can teach future agents how to repeat protected work.</h2>
+        <p>RedAct treats public traces as security interfaces: useful enough to audit, abstract enough to avoid becoming reusable procedure manuals.</p>
+      </div>
+      <img src="assets/fig1.png" alt="Motivation figure showing raw trace leakage and RedAct protection">
+    </section>
+
+    <section id="method" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Method</p>
+        <h2>Two layers: selective rewriting and provenance watermarking.</h2>
+      </div>
+      <div class="steps" aria-label="RedAct method steps">
+        <article>
+          <span>01</span>
+          <h3>Locate protected key information</h3>
+          <p>An owner-side LLM pass inspects the task and skill package to identify formulas, constants, thresholds, tool choices, validation routines, and private heuristics.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Review and deduplicate</h3>
+          <p>A lightweight human review removes spurious items and merges duplicates before release-time rewriting.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Rewrite the trace</h3>
+          <p>The rewriter abstracts protected procedural details while preserving final outputs, execution order, tool-use evidence, and verifier-critical fields.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Add behavioral watermarks</h3>
+          <p>Optional neutral action patterns support downstream provenance analysis when released traces are reused by student systems.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="benchmark" class="section benchmark-grid">
+      <div>
+        <p class="eyebrow">CapTraceBench</p>
+        <h2>A benchmark for procedural skill protection.</h2>
+        <p>CapTraceBench contains specialized long-horizon tasks that require multi-step tool use and task-specific skills, with automatic verifiers for success and step-level progress.</p>
+      </div>
+      <div class="stat-grid" aria-label="CapTraceBench statistics">
+        <div><strong>75</strong><span>Tasks</span></div>
+        <div><strong>154</strong><span>Skills</span></div>
+        <div><strong>23</strong><span>Task families</span></div>
+        <div><strong>7</strong><span>Domains</span></div>
+      </div>
+      <img src="assets/skillsbench_sunburst.png" alt="CapTraceBench domain and task taxonomy visualization">
+    </section>
+
+    <section id="results" class="section results-section">
+      <div class="section-heading">
+        <p class="eyebrow">Results</p>
+        <h2>RedAct removes the raw-trace reuse advantage while keeping traces auditable.</h2>
+      </div>
+      <div class="result-panels">
+        <article>
+          <h3>Raw traces leak procedural utility</h3>
+          <p>Across extraction, evolution, and retrieval reuse, raw traces recover much of the oracle-skill benefit, reaching 71.8-73.7% average step success.</p>
+        </article>
+        <article>
+          <h3>Protected traces suppress transfer</h3>
+          <p>After RedAct rewriting, the same reuse methods fall to 65.5-67.5% average step success, no higher than the 68.0% no-skill baseline.</p>
+        </article>
+        <article>
+          <h3>Audit evidence remains</h3>
+          <p>Release diagnostics show that final answers, tool names, verifier paths, and schema fields are mostly preserved while key procedural items are removed.</p>
+        </article>
+      </div>
+      <div class="image-pair">
+        <figure>
+          <img src="assets/protection_summary.png" alt="RedAct protection summary chart">
+          <figcaption>Protection lowers normalized skill transfer and recovered protected information.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/utility_reduction_summary.png" alt="Normalized skill transfer across reuse methods and models">
+          <figcaption>Raw trace utility is reduced across downstream reuse channels.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section watermark-section">
+      <div>
+        <p class="eyebrow">Provenance</p>
+        <h2>Behavioral watermarks provide complementary reuse evidence.</h2>
+      </div>
+      <div class="watermark-list" aria-label="Watermark hook families">
+        <p><strong>Ritual Marker</strong><span>Standalone action pattern at task start or end.</span></p>
+        <p><strong>Env Check</strong><span>Benign environment-probing action.</span></p>
+        <p><strong>Cross Check</strong><span>Contextual verification after tool observations.</span></p>
+        <p><strong>Error Anchoring</strong><span>Contextual recovery phrase after error feedback.</span></p>
+      </div>
+    </section>
+
+    <section id="resources" class="section resources" aria-labelledby="resources-title">
+      <div>
+        <p class="eyebrow">Release</p>
+        <h2 id="resources-title">Resources</h2>
+      </div>
+      <div class="resource-links">
+        <a href="../RedAct/README.md"><strong>Repository</strong><span>Pipeline scripts, watermark implementations, benchmark metadata.</span></a>
+        <a id="paper" href="#"><strong>Paper</strong><span>Link placeholder for the public paper PDF.</span></a>
+        <a href="../RedAct/assets/"><strong>Figures</strong><span>Pipeline, benchmark, and result figures used in the project page.</span></a>
+        <a href="#citation"><strong>Citation</strong><span>BibTeX placeholder until the proceedings entry is available.</span></a>
+      </div>
+    </section>
+
+    <section id="citation" class="section citation-section">
+      <div>
+        <p class="eyebrow">Citation</p>
+        <h2>Use RedAct or CapTraceBench?</h2>
+      </div>
+      <pre><code>@misc{redact2026,
+  title  = {RedAct: Redacting Agent Capability Traces for Procedural Skill Protection},
+  year   = {2026},
+  note   = {Project repository and benchmark release}
+}</code></pre>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>RedAct</span>
+    <span>Protected trace release for procedural skill protection</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
