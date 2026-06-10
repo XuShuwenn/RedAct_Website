@@ -2,6 +2,11 @@
 
 Static project website scaffold for **RedAct: Redacting Agent Capability Traces for Procedural Skill Protection**.
 
+## Links
+
+- Paper: [arXiv:2606.10813](https://arxiv.org/abs/2606.10813)
+- Code: [XuShuwenn/RedAct](https://github.com/XuShuwenn/RedAct)
+
 ## Sections
 
 The first version is organized around the release story:
@@ -23,4 +28,18 @@ python -m http.server 8080
 
 ## Deployment
 
-The directory is ready for GitHub Pages. Push it to a repository or publish it from a `docs/` branch/folder. The paper URL in `index.html` points to [arXiv:2606.10813](https://arxiv.org/pdf/2606.10813); update the remaining placeholder code URLs before public deployment.
+The directory is ready for GitHub Pages. Push it to a repository or publish it from a `docs/` branch/folder. The paper URL should point to [arXiv:2606.10813](https://arxiv.org/abs/2606.10813), and the code URL should point to [XuShuwenn/RedAct](https://github.com/XuShuwenn/RedAct).
+
+## Citation
+
+```bibtex
+@misc{xu2026redactredactingagentcapability,
+  title={RedAct: Redacting Agent Capability Traces for Procedural Skill Protection},
+  author={Shuwen Xu and Zhitao He and Yi R. and Fung},
+  year={2026},
+  eprint={2606.10813},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  url={https://arxiv.org/abs/2606.10813},
+}
+```
