@@ -23,4 +23,4 @@ python -m http.server 8080
 
 ## Deployment
 
-The directory is ready for GitHub Pages. Push it to a repository or publish it from a `docs/` branch/folder, then update the placeholder paper and code URLs in `index.html`.
+The directory is ready for GitHub Pages. Push it to a repository or publish it from a `docs/` branch/folder. The paper URL in `index.html` points to [arXiv:2606.10813](https://arxiv.org/pdf/2606.10813); update the remaining placeholder code URLs before public deployment.
