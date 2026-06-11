@@ -33,7 +33,7 @@
           <div class="column has-text-centered">
             <div class="title-lockup">
               <img class="project-logo" src="assets/redact_icon.png" alt="" aria-hidden="true">
-              <h1 class="title is-1 publication-title">RedAct: Redacting Agent Capability Traces for Procedural Skill Protection</h1>
+              <h1 class="title is-1 publication-title"><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span>: Redacting Agent Capability Traces for Procedural Skill Protection</h1>
             </div>
 
             <div class="is-size-4 publication-authors">
@@ -69,10 +69,10 @@
       <div class="hero-body">
         <img id="teaser" src="assets/fig2_pipeline.png" alt="RedAct pipeline for protected trace release">
         <h2 class="subtitle has-text-centered">
-          RedAct localizes protected procedural information, rewrites public agent traces, and injects behavioral watermarks for downstream provenance analysis.
+          <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> localizes protected procedural information, rewrites public agent traces, and injects behavioral watermarks for downstream provenance analysis.
         </h2>
         <p class="teaser-summary">
-          Public agent traces are useful audit records, but raw trajectories can also teach downstream agents reusable private procedures. RedAct releases traces that remain auditable while reducing procedural skill extraction.
+          Public agent traces are useful audit records, but raw trajectories can also teach downstream agents reusable private procedures. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> releases traces that remain auditable while reducing procedural skill extraction.
         </p>
       </div>
     </div>
@@ -85,9 +85,9 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>Users rely on execution traces to observe agent behavior, diagnose failures, and ensure accountability. These traces contain rich procedural detail, including tool invocations, intermediate decisions, and error-recovery logic.</p>
-            <p>RedAct addresses the tension between auditability and capability protection. It localizes protected key information, rewrites traces while preserving verifier-critical evidence, and injects behavioral watermarks for downstream provenance analysis.</p>
-            <p>Across representative trace reuse methods, RedAct reduces normalized skill transfer from 44.7-67.1% on raw traces to below the no-skill baseline, while preserving the execution evidence needed to inspect what the agent did.</p>
-            <p>Conceptually, RedAct reframes trace release as a controlled publication problem: the released artifact should still explain what happened during execution, but it should not expose a reusable recipe for reconstructing the owner's private skill.</p>
+            <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> addresses the tension between auditability and capability protection. It localizes protected key information, rewrites traces while preserving verifier-critical evidence, and injects behavioral watermarks for downstream provenance analysis.</p>
+            <p>Across representative trace reuse methods, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reduces normalized skill transfer from 44.7-67.1% on raw traces to below the no-skill baseline, while preserving the execution evidence needed to inspect what the agent did.</p>
+            <p>Conceptually, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reframes trace release as a controlled publication problem: the released artifact should still explain what happened during execution, but it should not expose a reusable recipe for reconstructing the owner's private skill.</p>
           </div>
         </div>
       </div>
@@ -100,12 +100,12 @@
         <div class="column">
           <h2 class="title is-3 has-text-centered">Trace Disclosure Risk</h2>
           <div class="content has-text-justified">
-            <p>Raw traces may reveal formulas, calibrated thresholds, tool choices, validation routines, and recovery strategies. RedAct treats trace release as a security interface: informative enough to audit, abstract enough to avoid direct procedural reuse.</p>
+            <p>Raw traces may reveal formulas, calibrated thresholds, tool choices, validation routines, and recovery strategies. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> treats trace release as a security interface: informative enough to audit, abstract enough to avoid direct procedural reuse.</p>
             <p>This risk is especially relevant for long-horizon tool-using agents, where the value often lies not only in the final answer, but in the sequence of checks, tool calls, fallbacks, and domain-specific choices that led to it.</p>
           </div>
-          <figure class="figure paper-figure">
+          <figure class="figure paper-figure risk-figure">
             <img src="assets/fig1.png" alt="Problem motivation showing raw trace leakage and RedAct protection">
-            <figcaption>Raw traces expose reusable private skills and enable skill distillation; RedAct protects released trajectories through selective rewriting and behavioral watermarking.</figcaption>
+            <figcaption>Raw traces expose reusable private skills and enable skill distillation; <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> protects released trajectories through selective rewriting and behavioral watermarking.</figcaption>
           </figure>
         </div>
       </div>
@@ -116,8 +116,8 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Method</h2>
       <div class="content has-text-justified">
-        <p>RedAct is deployed by the skill owner before trace publication. It sees the protected skill package, identifies private procedural items, releases an auditable protected trace, and optionally attaches behavioral provenance hooks.</p>
-        <p>The framework separates two goals that are often conflated: utility for human inspection and utility for downstream skill reconstruction. RedAct preserves the former while suppressing the latter.</p>
+        <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> is deployed by the skill owner before trace publication. It sees the protected skill package, identifies private procedural items, releases an auditable protected trace, and optionally attaches behavioral provenance hooks.</p>
+        <p>The framework separates two goals that are often conflated: utility for human inspection and utility for downstream skill reconstruction. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> preserves the former while suppressing the latter.</p>
       </div>
       <div class="columns is-multiline method-grid">
         <div class="column is-one-quarter">
@@ -160,11 +160,11 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Main Results</h2>
       <div class="content has-text-justified">
-        <p>The main table compares no skill access, oracle skill access, raw-trace reuse, and RedAct-protected trace reuse. We report success rate (SR) and step success rate (SSR) across six evaluated harness/model backends plus their average.</p>
+        <p>The main table compares no skill access, oracle skill access, raw-trace reuse, and <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span>-protected trace reuse. We report success rate (SR) and step success rate (SSR) across six evaluated harness/model backends plus their average.</p>
       </div>
       <div class="columns is-centered result-summary">
         <div class="column"><article><h3>Raw traces leak procedural utility</h3><p>Extraction, evolution, and retrieval reuse reach 71.8-73.7% average step success from raw traces.</p></article></div>
-        <div class="column"><article><h3>RedAct suppresses transfer</h3><p>The same reuse methods fall to 65.5-67.5% average step success after RedAct rewriting.</p></article></div>
+        <div class="column"><article><h3><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> suppresses transfer</h3><p>The same reuse methods fall to 65.5-67.5% average step success after <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> rewriting.</p></article></div>
         <div class="column"><article><h3>Auditability remains</h3><p>Final answers, tool names, verifier paths, and schema fields remain at 91.0-96.6% of raw levels.</p></article></div>
       </div>
 
@@ -213,7 +213,7 @@
             <tr><td>Hard</td><td>47.8</td><td>61.0</td><td>35.5</td><td>57.8</td><td>25.9</td><td>43.2</td><td>41.8</td><td>66.8</td><td>40.5</td><td>60.7</td><td>38.5</td><td>59.2</td><td>38.3</td><td>58.1</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>53.3</td><td>74.7</td><td>47.3</td><td>69.9</td><td>42.6</td><td>64.2</td><td>53.7</td><td>76.6</td><td>54.1</td><td>73.7</td><td>49.6</td><td>71.6</td><td>50.1</td><td>71.8</td></tr>
 
-            <tr class="group-row protected-group"><td colspan="16">Traces Protected by RedAct</td></tr>
+            <tr class="group-row protected-group"><td colspan="16">Traces Protected by <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span></td></tr>
             <tr><th rowspan="4">Extracted Skills</th><td>Easy</td><td>72.5</td><td>80.9</td><td>71.0</td><td>81.9</td><td>61.5</td><td>76.0</td><td>70.0</td><td>82.0</td><td>74.5</td><td>78.8</td><td>66.4</td><td>80.5</td><td>69.3</td><td>80.0</td></tr>
             <tr><td>Medium</td><td>43.2</td><td>67.2</td><td>38.6</td><td>61.3</td><td>28.4</td><td>62.8</td><td>43.8</td><td>72.4</td><td>42.5</td><td>68.9</td><td>37.4</td><td>63.0</td><td>39.0</td><td>65.9</td></tr>
             <tr><td>Hard</td><td>41.1</td><td>57.5</td><td>38.2</td><td>57.8</td><td>20.5</td><td>42.7</td><td>37.2</td><td>64.5</td><td>35.3</td><td>55.8</td><td>35.8</td><td>58.6</td><td>34.7</td><td>56.1</td></tr>
@@ -231,14 +231,14 @@
           </tbody>
         </table>
       </div>
-      <p class="table-note">Lower protected-trace scores indicate less transferable procedural utility from the released trace. RedAct pushes all three reuse channels to no higher than the no-skill baseline on average.</p>
+      <p class="table-note">Lower protected-trace scores indicate less transferable procedural utility from the released trace. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> pushes all three reuse channels to no higher than the no-skill baseline on average.</p>
 
       <div class="result-figures stacked-figures">
         <figure class="figure">
           <img src="assets/utility_reduction_summary.png" alt="Normalized skill transfer across reuse methods and backends">
-          <figcaption>RedAct reduces transferable procedural utility across downstream reuse channels and agent backends.</figcaption>
+          <figcaption><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reduces transferable procedural utility across downstream reuse channels and agent backends.</figcaption>
         </figure>
-        <figure class="figure">
+        <figure class="figure protection-figure">
           <img src="assets/protection_summary.png" alt="Protection summary showing NST and RPI reductions">
           <figcaption>NST falls below zero after protection; RPI drops by 37-48% relative in downstream artifacts.</figcaption>
         </figure>
@@ -320,9 +320,9 @@ import numpy as np
       <h2 class="title is-3 has-text-centered">Resources</h2>
       <div class="columns resource-links">
         <div class="column"><a href="https://arxiv.org/abs/2606.10813"><strong>Paper</strong><span>arXiv:2606.10813</span></a></div>
-        <div class="column"><a href="https://github.com/XuShuwenn/RedAct"><strong>Code</strong><span>RedAct pipeline scripts, detectors, and evaluation harness.</span></a></div>
+        <div class="column"><a href="https://github.com/XuShuwenn/RedAct"><strong>Code</strong><span><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> pipeline scripts, detectors, and evaluation harness.</span></a></div>
         <div class="column"><a href="#"><strong>Benchmark</strong><span>CapTraceBench task metadata, verifiers, and evaluation scripts.</span></a></div>
-        <div class="column"><a href="mailto:sxucn@connect.ust.hk"><strong>Contact</strong><span>For questions about RedAct and CapTraceBench.</span></a></div>
+        <div class="column"><a href="mailto:sxucn@connect.ust.hk"><strong>Contact</strong><span>For questions about <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> and CapTraceBench.</span></a></div>
       </div>
     </div>
   </section>
@@ -332,7 +332,7 @@ import numpy as np
       <h2 class="title is-3 has-text-centered">BibTeX</h2>
       <pre><code>@misc{xu2026redactredactingagentcapability,
   title={RedAct: Redacting Agent Capability Traces for Procedural Skill Protection},
-  author={Shuwen Xu and Zhitao He and Yi R. and Fung},
+  author={Shuwen Xu and Zhitao He and Yi R. Fung},
   year={2026},
   eprint={2606.10813},
   archivePrefix={arXiv},
@@ -344,7 +344,7 @@ import numpy as np
 
   <footer class="footer">
     <div class="content has-text-centered">
-      <p>RedAct · Hong Kong University of Science and Technology</p>
+      <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> · Hong Kong University of Science and Technology</p>
     </div>
   </footer>
 

@@ -42,6 +42,28 @@ a {
   margin-bottom: 0;
 }
 
+.brand-redact {
+  display: inline-block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-variant-caps: small-caps;
+  font-weight: 800;
+  line-height: 0.95;
+  white-space: nowrap;
+}
+
+.brand-red {
+  color: #f23aaa;
+}
+
+.brand-act {
+  color: #3a78dc;
+}
+
+.publication-title .brand-redact {
+  font-size: 1.08em;
+  text-transform: uppercase;
+}
+
 .title-lockup {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr);
@@ -182,6 +204,11 @@ figcaption {
 
 .paper-figure {
   max-width: 720px;
+}
+
+.risk-figure {
+  width: 100%;
+  max-width: 430px;
 }
 
 .taxonomy {
@@ -335,13 +362,21 @@ figcaption {
 .main-results-table .group-row td {
   position: static;
   color: #39424e;
+  font-family: "Google Sans", "Noto Sans", Arial, sans-serif;
+  font-size: 1.08rem;
+  letter-spacing: 0;
+  line-height: 1.2;
   text-align: center;
   background: #f1f5f9;
-  font-weight: 800;
+  font-weight: 700;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  text-transform: uppercase;
 }
 
 .main-results-table .protected-group td {
   color: #0e5f57;
+  font-size: 1.12rem;
   background: #eaf7f4;
 }
 
@@ -398,6 +433,13 @@ figcaption {
 .result-figures figure img {
   width: 100%;
   background: #fff;
+}
+
+.result-figures .protection-figure {
+  width: 100%;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .watermark-table {
