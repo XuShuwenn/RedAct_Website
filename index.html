@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,10 +18,10 @@
     <div class="navbar-menu is-active">
       <div class="navbar-start is-flex is-justify-content-center">
         <a class="navbar-item" href="#abstract">Abstract</a>
-        <a class="navbar-item" href="#method">Method</a>
         <a class="navbar-item" href="#benchmark">Benchmark</a>
+        <a class="navbar-item" href="#method">Method</a>
         <a class="navbar-item" href="#results">Results</a>
-        <a class="navbar-item" href="#watermarks">Watermarks</a>
+        <a class="navbar-item" href="#analysis">Analysis</a>
         <a class="navbar-item" href="#case-study">Case Study</a>
         <a class="navbar-item" href="#bibtex">BibTeX</a>
       </div>
@@ -48,10 +50,24 @@
             </div>
 
             <div class="publication-links">
-              <span class="link-block"><a href="https://arxiv.org/abs/2606.10813" class="external-link button is-normal is-rounded is-dark"><span>Paper</span></a></span>
-              <span class="link-block"><a href="https://github.com/XuShuwenn/RedAct" class="external-link button is-normal is-rounded is-dark"><span>Code</span></a></span>
-              <span class="link-block"><a href="#benchmark" class="external-link button is-normal is-rounded is-dark"><span>Benchmark</span></a></span>
-              <span class="link-block"><a href="#bibtex" class="external-link button is-normal is-rounded is-dark"><span>BibTeX</span></a></span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2606.10813" class="external-link button is-normal is-rounded btn-arxiv has-text-weight-semibold">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/XuShuwenn/RedAct" class="external-link button is-normal is-rounded btn-github has-text-weight-semibold">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/papers/2606.10813" class="external-link button is-normal is-rounded btn-hf has-text-weight-semibold">
+                  <span class="icon hf-icon">🤗</span>
+                  <span>Huggingface Daily</span>
+                </a>
+              </span>
             </div>
 
             <p class="contact-line">
@@ -64,30 +80,13 @@
     </div>
   </section>
 
-  <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <img id="teaser" src="assets/fig2_pipeline.png" alt="RedAct pipeline for protected trace release">
-        <h2 class="subtitle has-text-centered">
-          <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> localizes protected procedural information, rewrites public agent traces, and injects behavioral watermarks for downstream provenance analysis.
-        </h2>
-        <p class="teaser-summary">
-          Public agent traces are useful audit records, but raw trajectories can also teach downstream agents reusable private procedures. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> releases traces that remain auditable while reducing procedural skill extraction.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="abstract">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
-            <p>Users rely on execution traces to observe agent behavior, diagnose failures, and ensure accountability. These traces contain rich procedural detail, including tool invocations, intermediate decisions, and error-recovery logic.</p>
-            <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> addresses the tension between auditability and capability protection. It localizes protected key information, rewrites traces while preserving verifier-critical evidence, and injects behavioral watermarks for downstream provenance analysis.</p>
-            <p>Across representative trace reuse methods, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reduces normalized skill transfer from 44.7-67.1% on raw traces to below the no-skill baseline, while preserving the execution evidence needed to inspect what the agent did.</p>
-            <p>Conceptually, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reframes trace release as a controlled publication problem: the released artifact should still explain what happened during execution, but it should not expose a reusable recipe for reconstructing the owner's private skill.</p>
+            <p>Users rely on execution traces to observe agent behavior, diagnose failures, and ensure accountability. These traces contain rich procedural detail, including tool invocations, intermediate decisions, and error-recovery logic. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> addresses the tension between auditability and capability protection. It localizes protected key information, rewrites traces while preserving verifier-critical evidence, and injects behavioral watermarks for downstream provenance analysis. Across representative trace reuse methods, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reduces normalized skill transfer from 44.7-67.1% on raw traces to below the no-skill baseline, while preserving the execution evidence needed to inspect what the agent did. Conceptually, <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reframes trace release as a controlled publication problem: the released artifact should still explain what happened during execution, but it should not expose a reusable recipe for reconstructing the owner's private skill.</p>
           </div>
         </div>
       </div>
@@ -107,30 +106,6 @@
             <img src="assets/fig1.png" alt="Problem motivation showing raw trace leakage and RedAct protection">
             <figcaption>Raw traces expose reusable private skills and enable skill distillation; <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> protects released trajectories through selective rewriting and behavioral watermarking.</figcaption>
           </figure>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="method">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Method</h2>
-      <div class="content has-text-justified">
-        <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> is deployed by the skill owner before trace publication. It sees the protected skill package, identifies private procedural items, releases an auditable protected trace, and optionally attaches behavioral provenance hooks.</p>
-        <p>The framework separates two goals that are often conflated: utility for human inspection and utility for downstream skill reconstruction. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> preserves the former while suppressing the latter.</p>
-      </div>
-      <div class="columns is-multiline method-grid">
-        <div class="column is-one-quarter">
-          <article class="method-card"><span>1</span><h3>Key-Item Localization</h3><p>Identify formulas, constants, thresholds, specialized tools, validation routines, and private heuristics from the skill package.</p></article>
-        </div>
-        <div class="column is-one-quarter">
-          <article class="method-card"><span>2</span><h3>Trace Rewriting</h3><p>Abstract reusable procedural details while preserving execution order, tool-use evidence, final outputs, and verifier-critical fields.</p></article>
-        </div>
-        <div class="column is-one-quarter">
-          <article class="method-card"><span>3</span><h3>Audit Preservation</h3><p>Keep traces useful for inspection instead of collapsing them into answer-only summaries.</p></article>
-        </div>
-        <div class="column is-one-quarter">
-          <article class="method-card"><span>4</span><h3>Behavioral Provenance</h3><p>Insert neutral hooks such as Env Check and Ritual Marker that can persist in downstream students.</p></article>
         </div>
       </div>
     </div>
@@ -156,16 +131,65 @@
     </div>
   </section>
 
+  <section class="section" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <div class="content has-text-justified">
+        <p><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> is deployed by the skill owner before trace publication. It sees the protected skill package, identifies private procedural items, releases an auditable protected trace, and optionally attaches behavioral provenance hooks.</p>
+        <p>The framework separates two goals that are often conflated: utility for human inspection and utility for downstream skill reconstruction. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> preserves the former while suppressing the latter.</p>
+      </div>
+      <figure class="figure paper-figure method-figure">
+        <img src="assets/fig2_pipeline.png" alt="RedAct pipeline for protected trace release">
+        <figcaption><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> localizes protected procedural information, rewrites public agent traces, and injects behavioral watermarks for downstream provenance analysis.</figcaption>
+      </figure>
+      <div class="columns is-multiline method-grid">
+        <div class="column is-one-third">
+          <article class="method-card"><span>1</span><h3>Key-Item Localization</h3><p>Identify formulas, constants, thresholds, specialized tools, validation routines, and private heuristics from the skill package.</p></article>
+        </div>
+        <div class="column is-one-third">
+          <article class="method-card"><span>2</span><h3>Trace Rewriting</h3><p>Abstract reusable procedural details while preserving execution order, tool-use evidence, final outputs, and verifier-critical fields.</p></article>
+        </div>
+        <div class="column is-one-third">
+          <article class="method-card"><span>3</span><h3>Behavioral Watermarking</h3><p>Insert neutral hooks such as Env Check and Ritual Marker that can persist in downstream students for provenance analysis.</p></article>
+        </div>
+      </div>
+      <div class="content has-text-justified method-watermark-copy">
+        <p>Watermark hooks are functionally neutral action-observation patterns inserted into eligible protected traces. Standalone hooks provide broad provenance signals, while contextual hooks depend on tool observations or error states.</p>
+      </div>
+      <div class="watermark-table method-watermark-table" aria-label="Watermark hook families">
+        <p><strong>Ritual Marker</strong><span>Standalone action pattern at task start or end.</span></p>
+        <p><strong>Env Check</strong><span>Benign environment-probing action.</span></p>
+        <p><strong>Cross Check</strong><span>Contextual verification after tool observations.</span></p>
+        <p><strong>Error Anchoring</strong><span>Contextual recovery phrase after error feedback.</span></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="results">
     <div class="container is-max-desktop results-container">
-      <h2 class="title is-3 has-text-centered">Main Results</h2>
+      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
       <div class="content has-text-justified">
         <p>The main table compares no skill access, oracle skill access, raw-trace reuse, and <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span>-protected trace reuse. We report success rate (SR) and step success rate (SSR) across six evaluated harness/model backends plus their average.</p>
       </div>
-      <div class="columns is-centered result-summary">
-        <div class="column"><article><h3>Raw traces leak procedural utility</h3><p>Extraction, evolution, and retrieval reuse reach 71.8-73.7% average step success from raw traces.</p></article></div>
-        <div class="column"><article><h3><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> suppresses transfer</h3><p>The same reuse methods fall to 65.5-67.5% average step success after <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> rewriting.</p></article></div>
-        <div class="column"><article><h3>Auditability remains</h3><p>Final answers, tool names, verifier paths, and schema fields remain at 91.0-96.6% of raw levels.</p></article></div>
+
+      <h3 class="reuse-settings-title">Downstream Reuse Settings</h3>
+      <div class="reuse-settings" aria-label="Downstream trajectory reuse settings">
+        <article>
+          <h3>Single-Agent Skill Extraction</h3>
+          <p>Synthesizes a reusable <code>SKILL.md</code> document and supporting scripts from released trajectories.</p>
+        </article>
+        <article>
+          <h3>Multi-Agent Skill Evolution</h3>
+          <p>Refines induced skills over multiple analyzer/evolver passes using successful and failed trajectories.</p>
+        </article>
+        <article>
+          <h3>Retrieval Reuse</h3>
+          <p>Indexes released traces and injects top-k similar snippets as in-context demonstrations at inference time.</p>
+        </article>
+        <article>
+          <h3>Trajectory Fine-tuning</h3>
+          <p>Fine-tunes a student on released trajectories to evaluate whether behavioral provenance signals persist.</p>
+        </article>
       </div>
 
       <div class="main-table-wrap" aria-label="Main evaluation results table">
@@ -192,39 +216,39 @@
             <tr><td>Hard</td><td>44.0</td><td>58.4</td><td>29.1</td><td>48.9</td><td>20.5</td><td>39.3</td><td>38.8</td><td>60.7</td><td>37.6</td><td>50.8</td><td>29.4</td><td>49.5</td><td>33.2</td><td>51.3</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>49.8</td><td>72.1</td><td>43.7</td><td>66.1</td><td>36.0</td><td>60.9</td><td>48.7</td><td>73.1</td><td>49.0</td><td>68.2</td><td>44.3</td><td>67.4</td><td>45.2</td><td>68.0</td></tr>
 
-            <tr><th rowspan="4">Oracle Skills</th><td>Easy</td><td>81.4</td><td>91.1</td><td>78.2</td><td>85.9</td><td>73.2</td><td>83.5</td><td>85.5</td><td>91.9</td><td>79.4</td><td>88.0</td><td>77.0</td><td>86.6</td><td>79.1</td><td>87.8</td></tr>
+            <tr><th rowspan="4">w/ Oracle Skills</th><td>Easy</td><td>81.4</td><td>91.1</td><td>78.2</td><td>85.9</td><td>73.2</td><td>83.5</td><td>85.5</td><td>91.9</td><td>79.4</td><td>88.0</td><td>77.0</td><td>86.6</td><td>79.1</td><td>87.8</td></tr>
             <tr><td>Medium</td><td>61.5</td><td>81.5</td><td>48.0</td><td>72.4</td><td>47.9</td><td>72.1</td><td>62.7</td><td>82.1</td><td>54.9</td><td>76.0</td><td>49.6</td><td>73.5</td><td>54.1</td><td>76.3</td></tr>
             <tr><td>Hard</td><td>48.9</td><td>69.7</td><td>46.7</td><td>65.8</td><td>24.4</td><td>43.5</td><td>45.2</td><td>72.9</td><td>44.5</td><td>66.9</td><td>43.2</td><td>62.0</td><td>42.1</td><td>63.5</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>64.0</td><td>81.4</td><td>55.8</td><td>74.5</td><td>49.3</td><td>68.7</td><td>64.8</td><td>82.6</td><td>59.1</td><td>77.1</td><td>55.5</td><td>74.4</td><td>58.1</td><td>76.5</td></tr>
 
             <tr class="group-row"><td colspan="16">Raw Traces</td></tr>
-            <tr><th rowspan="4">Extracted Skills</th><td>Easy</td><td>80.0</td><td>87.0</td><td>76.7</td><td>82.5</td><td>70.5</td><td>81.4</td><td>78.3</td><td>91.5</td><td>75.3</td><td>86.5</td><td>75.8</td><td>85.0</td><td>76.1</td><td>85.6</td></tr>
+            <tr><th rowspan="4">w/ Extracted Skills</th><td>Easy</td><td>80.0</td><td>87.0</td><td>76.7</td><td>82.5</td><td>70.5</td><td>81.4</td><td>78.3</td><td>91.5</td><td>75.3</td><td>86.5</td><td>75.8</td><td>85.0</td><td>76.1</td><td>85.6</td></tr>
             <tr><td>Medium</td><td>55.0</td><td>80.5</td><td>46.3</td><td>69.5</td><td>43.0</td><td>70.0</td><td>50.7</td><td>77.4</td><td>48.9</td><td>76.5</td><td>47.6</td><td>71.2</td><td>48.6</td><td>74.2</td></tr>
             <tr><td>Hard</td><td>47.1</td><td>67.5</td><td>44.9</td><td>58.3</td><td>21.0</td><td>42.1</td><td>43.2</td><td>68.0</td><td>41.9</td><td>54.7</td><td>38.7</td><td>56.4</td><td>39.5</td><td>57.8</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>59.9</td><td>79.3</td><td>54.1</td><td>70.4</td><td>45.3</td><td>66.7</td><td>56.4</td><td>79.0</td><td>54.4</td><td>74.2</td><td>53.1</td><td>71.5</td><td>53.9</td><td>73.5</td></tr>
 
-            <tr><th rowspan="4">Evolved Skills</th><td>Easy</td><td>74.5</td><td>86.0</td><td>74.5</td><td>82.7</td><td>69.8</td><td>81.2</td><td>74.5</td><td>89.4</td><td>79.5</td><td>86.0</td><td>75.4</td><td>85.5</td><td>74.7</td><td>85.1</td></tr>
+            <tr><th rowspan="4">w/ Evolved Skills</th><td>Easy</td><td>74.5</td><td>86.0</td><td>74.5</td><td>82.7</td><td>69.8</td><td>81.2</td><td>74.5</td><td>89.4</td><td>79.5</td><td>86.0</td><td>75.4</td><td>85.5</td><td>74.7</td><td>85.1</td></tr>
             <tr><td>Medium</td><td>45.3</td><td>75.5</td><td>39.5</td><td>69.1</td><td>41.4</td><td>71.7</td><td>49.3</td><td>75.2</td><td>50.8</td><td>75.9</td><td>43.2</td><td>70.5</td><td>44.9</td><td>73.0</td></tr>
             <tr><td>Hard</td><td>49.1</td><td>61.4</td><td>40.2</td><td>62.5</td><td>31.7</td><td>48.8</td><td>42.5</td><td>69.5</td><td>41.3</td><td>64.6</td><td>42.1</td><td>63.8</td><td>41.1</td><td>61.8</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>53.9</td><td>75.1</td><td>49.0</td><td>71.2</td><td>46.8</td><td>69.0</td><td>54.5</td><td>77.7</td><td>56.3</td><td>76.0</td><td>51.5</td><td>73.0</td><td>52.0</td><td>73.7</td></tr>
 
-            <tr><th rowspan="4">Retrieval Reuse</th><td>Easy</td><td>73.8</td><td>86.0</td><td>73.6</td><td>82.7</td><td>68.9</td><td>81.2</td><td>76.0</td><td>89.1</td><td>77.2</td><td>85.8</td><td>73.5</td><td>85.5</td><td>73.8</td><td>85.0</td></tr>
+            <tr><th rowspan="4">w/ Retrieval Reuse</th><td>Easy</td><td>73.8</td><td>86.0</td><td>73.6</td><td>82.7</td><td>68.9</td><td>81.2</td><td>76.0</td><td>89.1</td><td>77.2</td><td>85.8</td><td>73.5</td><td>85.5</td><td>73.8</td><td>85.0</td></tr>
             <tr><td>Medium</td><td>44.9</td><td>74.8</td><td>38.8</td><td>68.6</td><td>36.2</td><td>64.6</td><td>47.2</td><td>74.4</td><td>48.0</td><td>73.2</td><td>42.0</td><td>69.8</td><td>42.9</td><td>70.9</td></tr>
             <tr><td>Hard</td><td>47.8</td><td>61.0</td><td>35.5</td><td>57.8</td><td>25.9</td><td>43.2</td><td>41.8</td><td>66.8</td><td>40.5</td><td>60.7</td><td>38.5</td><td>59.2</td><td>38.3</td><td>58.1</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>53.3</td><td>74.7</td><td>47.3</td><td>69.9</td><td>42.6</td><td>64.2</td><td>53.7</td><td>76.6</td><td>54.1</td><td>73.7</td><td>49.6</td><td>71.6</td><td>50.1</td><td>71.8</td></tr>
 
             <tr class="group-row protected-group"><td colspan="16">Traces Protected by <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span></td></tr>
-            <tr><th rowspan="4">Extracted Skills</th><td>Easy</td><td>72.5</td><td>80.9</td><td>71.0</td><td>81.9</td><td>61.5</td><td>76.0</td><td>70.0</td><td>82.0</td><td>74.5</td><td>78.8</td><td>66.4</td><td>80.5</td><td>69.3</td><td>80.0</td></tr>
+            <tr><th rowspan="4">w/ Extracted Skills</th><td>Easy</td><td>72.5</td><td>80.9</td><td>71.0</td><td>81.9</td><td>61.5</td><td>76.0</td><td>70.0</td><td>82.0</td><td>74.5</td><td>78.8</td><td>66.4</td><td>80.5</td><td>69.3</td><td>80.0</td></tr>
             <tr><td>Medium</td><td>43.2</td><td>67.2</td><td>38.6</td><td>61.3</td><td>28.4</td><td>62.8</td><td>43.8</td><td>72.4</td><td>42.5</td><td>68.9</td><td>37.4</td><td>63.0</td><td>39.0</td><td>65.9</td></tr>
             <tr><td>Hard</td><td>41.1</td><td>57.5</td><td>38.2</td><td>57.8</td><td>20.5</td><td>42.7</td><td>37.2</td><td>64.5</td><td>35.3</td><td>55.8</td><td>35.8</td><td>58.6</td><td>34.7</td><td>56.1</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>50.5</td><td>68.7</td><td>47.1</td><td>66.0</td><td>35.4</td><td>61.8</td><td>49.3</td><td>73.2</td><td>49.4</td><td>68.6</td><td>44.8</td><td>66.7</td><td>46.1</td><td>67.5</td></tr>
 
-            <tr><th rowspan="4">Evolved Skills</th><td>Easy</td><td>67.6</td><td>82.1</td><td>68.4</td><td>78.9</td><td>64.1</td><td>77.6</td><td>69.8</td><td>84.8</td><td>70.4</td><td>81.4</td><td>67.3</td><td>81.2</td><td>67.9</td><td>81.0</td></tr>
+            <tr><th rowspan="4">w/ Evolved Skills</th><td>Easy</td><td>67.6</td><td>82.1</td><td>68.4</td><td>78.9</td><td>64.1</td><td>77.6</td><td>69.8</td><td>84.8</td><td>70.4</td><td>81.4</td><td>67.3</td><td>81.2</td><td>67.9</td><td>81.0</td></tr>
             <tr><td>Medium</td><td>41.1</td><td>70.4</td><td>35.0</td><td>64.4</td><td>26.8</td><td>59.6</td><td>40.0</td><td>69.6</td><td>40.5</td><td>66.0</td><td>36.9</td><td>65.2</td><td>36.7</td><td>65.9</td></tr>
             <tr><td>Hard</td><td>42.8</td><td>57.1</td><td>28.4</td><td>47.6</td><td>20.0</td><td>38.2</td><td>37.6</td><td>59.2</td><td>36.4</td><td>49.4</td><td>28.6</td><td>48.1</td><td>32.3</td><td>49.9</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>48.6</td><td>70.5</td><td>42.4</td><td>64.5</td><td>35.2</td><td>59.5</td><td>47.4</td><td>71.3</td><td>47.5</td><td>66.3</td><td>43.1</td><td>65.6</td><td>44.0</td><td>66.3</td></tr>
 
-            <tr><th rowspan="4">Retrieval Reuse</th><td>Easy</td><td>66.8</td><td>81.7</td><td>67.9</td><td>78.0</td><td>63.5</td><td>76.5</td><td>68.9</td><td>83.8</td><td>69.7</td><td>80.8</td><td>66.7</td><td>80.7</td><td>67.2</td><td>80.2</td></tr>
+            <tr><th rowspan="4">w/ Retrieval Reuse</th><td>Easy</td><td>66.8</td><td>81.7</td><td>67.9</td><td>78.0</td><td>63.5</td><td>76.5</td><td>68.9</td><td>83.8</td><td>69.7</td><td>80.8</td><td>66.7</td><td>80.7</td><td>67.2</td><td>80.2</td></tr>
             <tr><td>Medium</td><td>40.6</td><td>69.6</td><td>34.4</td><td>63.5</td><td>26.2</td><td>58.8</td><td>39.2</td><td>68.8</td><td>39.7</td><td>65.2</td><td>36.2</td><td>64.4</td><td>36.1</td><td>65.0</td></tr>
             <tr><td>Hard</td><td>42.4</td><td>56.6</td><td>27.8</td><td>47.0</td><td>19.7</td><td>37.8</td><td>37.1</td><td>58.4</td><td>35.9</td><td>48.8</td><td>28.1</td><td>47.6</td><td>31.8</td><td>49.4</td></tr>
             <tr class="avg-row"><td>Avg.</td><td>48.0</td><td>69.9</td><td>41.8</td><td>63.6</td><td>34.7</td><td>58.8</td><td>46.6</td><td>70.4</td><td>46.8</td><td>65.6</td><td>42.5</td><td>64.9</td><td>43.4</td><td>65.5</td></tr>
@@ -233,97 +257,97 @@
       </div>
       <p class="table-note">Lower protected-trace scores indicate less transferable procedural utility from the released trace. <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> pushes all three reuse channels to no higher than the no-skill baseline on average.</p>
 
-      <div class="result-figures stacked-figures">
-        <figure class="figure">
-          <img src="assets/utility_reduction_summary.png" alt="Normalized skill transfer across reuse methods and backends">
-          <figcaption><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> reduces transferable procedural utility across downstream reuse channels and agent backends.</figcaption>
-        </figure>
-        <figure class="figure protection-figure">
-          <img src="assets/protection_summary.png" alt="Protection summary showing NST and RPI reductions">
-          <figcaption>NST falls below zero after protection; RPI drops by 37-48% relative in downstream artifacts.</figcaption>
-        </figure>
-      </div>
+      <article class="transfer-card watermark-results-card">
+        <div class="transfer-copy">
+          <h3>Behavioral watermarks provide provenance evidence</h3>
+          <p>Standalone hooks produce the clearest detection signal after trajectory fine-tuning, while contextual hooks remain selective and introduce no false alarms in this evaluation. TD reports true detection rate, and FA reports false alarm rate.</p>
+        </div>
+        <div class="analysis-table-wrap" aria-label="Behavioral watermark detection results table">
+          <table class="analysis-table watermark-results-table">
+            <thead>
+              <tr><th rowspan="2">Type</th><th rowspan="2">Watermark</th><th colspan="2">Qwen3-8B</th><th colspan="2">Qwen3-4B</th></tr>
+              <tr><th>TD</th><th>FA</th><th>TD</th><th>FA</th></tr>
+            </thead>
+            <tbody>
+              <tr class="ours-row"><th>Standalone</th><td>Env Check</td><td>93.6</td><td>1.3</td><td>96.4</td><td>1.9</td></tr>
+              <tr class="ours-row"><th>Standalone</th><td>Ritual Marker</td><td>100.0</td><td>0.0</td><td>99.8</td><td>0.0</td></tr>
+              <tr><th>Contextual</th><td>Cross Check</td><td>18.5</td><td>0.0</td><td>16.4</td><td>0.0</td></tr>
+              <tr><th>Contextual</th><td>Error Anchoring</td><td>28.3</td><td>0.0</td><td>32.2</td><td>0.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
     </div>
   </section>
 
-  <section class="section" id="watermarks">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Behavioral Watermarks</h2>
-      <div class="content has-text-justified">
-        <p>Watermarks are functionally neutral action-observation patterns inserted into eligible protected traces. At detection time, the owner probes a suspected student and tests whether the behavior persists.</p>
-        <p>Standalone hooks provide the clearest provenance signal, while contextual hooks are more selective because they depend on tool observations or error states. Together they give trace owners an additional way to reason about downstream reuse.</p>
+  <section class="section" id="analysis">
+    <div class="container is-max-desktop analysis-container">
+      <h2 class="title is-3 has-text-centered">Analysis</h2>
+
+      <article class="transfer-card">
+        <div class="transfer-copy">
+          <h3><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> suppresses transfer</h3>
+          <p>Raw traces expose procedural utility: extraction, evolution, and retrieval reuse reach 71.8-73.7% average step success. After <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> rewriting, the same reuse methods fall to 65.5-67.5%. Normalized Skill Transfer drops across extraction, evolution, and retrieval reuse, often moving below the no-skill baseline.</p>
+        </div>
+        <figure class="transfer-figure">
+          <img src="assets/utility_reduction_summary.png" alt="Normalized skill transfer before and after RedAct protection across reuse methods and model backends">
+        </figure>
+      </article>
+
+      <div class="analysis-card-grid">
+        <article class="transfer-card protection-card">
+          <div class="transfer-copy">
+            <h3>Protection removes residual leakage</h3>
+            <p>After <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> rewriting, NST becomes non-positive across extraction, evolution, and retrieval reuse. RPI also falls by 37-48%, indicating less recovered protected key information in downstream artifacts while preserving audit-critical execution evidence.</p>
+          </div>
+          <figure class="transfer-figure protection-card-figure">
+            <img src="assets/protection_summary.png" alt="Protection summary showing NST and RPI reductions">
+          </figure>
+        </article>
+
+        <article class="transfer-card integrity-card">
+          <div class="transfer-copy">
+            <h3>Audit evidence stays intact</h3>
+            <p>Protected traces retain 91.0-96.6% of final answers, tool names, verifier paths, and schema fields from raw traces, while removing 70.6% of protected key items. This supports trace release as an auditable artifact rather than an answer-only summary.</p>
+          </div>
+          <figure class="transfer-figure integrity-card-figure">
+            <img src="assets/release_integrity.png" alt="Release integrity after trace protection across audit preservation, operational stability, and key-item removal">
+          </figure>
+        </article>
       </div>
-      <div class="watermark-table" aria-label="Watermark hook families">
-        <p><strong>Ritual Marker</strong><span>Standalone action pattern at task start or end.</span></p>
-        <p><strong>Env Check</strong><span>Benign environment-probing action.</span></p>
-        <p><strong>Cross Check</strong><span>Contextual verification after tool observations.</span></p>
-        <p><strong>Error Anchoring</strong><span>Contextual recovery phrase after error feedback.</span></p>
-      </div>
+
+      <article class="transfer-card ablation-card">
+        <div class="transfer-copy">
+          <h3>Key-item guidance matters</h3>
+          <p>Generic rewriting still leaves reusable signal in released traces. Explicit key-item localization pushes NST below the no-skill baseline across all three reuse methods and reduces recovered protected information in downstream artifacts.</p>
+        </div>
+        <div class="analysis-table-wrap" aria-label="Key-item guidance ablation table">
+          <table class="analysis-table">
+            <thead>
+              <tr><th>Reuse Method</th><th>Rewrite Type</th><th>SR</th><th>SSR</th><th>NST</th><th>RPI</th></tr>
+            </thead>
+            <tbody>
+              <tr class="ours-row"><th>Extracted Skills</th><td>Key-Item (Ours)</td><td>50.5</td><td>68.7</td><td>-36.6</td><td>20.4</td></tr>
+              <tr><th>Extracted Skills</th><td>Generic</td><td>55.6</td><td>76.9</td><td>51.6</td><td>27.6</td></tr>
+              <tr class="ours-row"><th>Evolved Skills</th><td>Key-Item (Ours)</td><td>48.6</td><td>70.5</td><td>-17.2</td><td>21.1</td></tr>
+              <tr><th>Evolved Skills</th><td>Generic</td><td>52.8</td><td>74.2</td><td>22.6</td><td>29.4</td></tr>
+              <tr class="ours-row"><th>Retrieval Reuse</th><td>Key-Item (Ours)</td><td>48.0</td><td>69.9</td><td>-23.7</td><td>14.1</td></tr>
+              <tr><th>Retrieval Reuse</th><td>Generic</td><td>57.9</td><td>72.3</td><td>2.2</td><td>15.7</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
     </div>
   </section>
 
   <section class="section" id="case-study">
-    <div class="container is-max-desktop">
+    <div class="container is-max-desktop case-demo-container">
       <h2 class="title is-3 has-text-centered">Case Study</h2>
       <div class="content has-text-justified">
-        <p>A protected release should still let a reader reconstruct the execution story. This real case is the lake warming attribution task from our appendix. The raw trace exposes reusable implementation details for trend testing and driver attribution, while the protected trace keeps the audit path and final outputs but abstracts the procedural recipe.</p>
+        <p>These demos compare raw and protected trajectories from the released benchmark traces. Raw trajectories highlight reusable key items in light red; protected trajectories highlight rewritten assistant text in light orange and injected watermark text in light purple.</p>
       </div>
-      <div class="case-panel">
-        <div class="case-task">
-          <h3>Task: Lake Warming Attribution</h3>
-          <p>Given water temperature, climate, land-cover, and hydrology CSV files, the agent must output <code>trend_result.csv</code> with slope and p-value, and <code>dominant_factor.csv</code> with the most important driver category and its contribution.</p>
-        </div>
-        <div class="case-compare">
-          <article class="case-trace raw-trace">
-            <div class="trace-head"><img src="assets/redact_icon.png" alt="" aria-hidden="true"><strong>Raw trace exposes reusable procedure</strong></div>
-            <div class="trace-body">
-              <p class="trace-step">Step 4: create <code>trend_analysis.py</code>, read <code>water_temperature.csv</code>, run <mark>Mann-Kendall trend test</mark>, calculate <mark>Sen's slope</mark> and <mark>p-value</mark>, then write <code>output/trend_result.csv</code>.</p>
-              <p class="trace-step">Step 6: create <code>driver_analysis.py</code>, merge files, define <mark>Heat / Flow / Wind / Human</mark> variable groups, standardize data, run <mark>Factor Analysis</mark>, calculate <mark>contributions</mark>, then write <code>output/dominant_factor.csv</code>.</p>
-              <pre><code>&lt;tool_call name=write_file(
-  file_path='driver_analysis.py',
-  content='import pandas as pd
-import numpy as np
-... factor-analysis implementation ...')&gt;</code></pre>
-            </div>
-          </article>
-          <article class="case-trace protected-trace">
-            <div class="trace-head"><img src="assets/rewrite_icon.png" alt="" aria-hidden="true"><strong>Protected trace preserves audit evidence</strong></div>
-            <div class="trace-body">
-              <p class="trace-step">Step 5: create a script to load the temperature data, perform the trend analysis, and save results to <code>output/trend_result.csv</code>; protected implementation details are abstracted.</p>
-              <p class="trace-step">Step 7: create <code>driver_analysis.py</code> for driver analysis, but collapse the tool content to a non-reusable placeholder while keeping execution order and output paths.</p>
-              <pre><code>&lt;tool_call name=write_file(
-  file_path='driver_analysis.py',
-  content='created analysis script')&gt;</code></pre>
-            </div>
-          </article>
-        </div>
-        <div class="case-outcome">
-          <div>
-            <strong>Audit outputs preserved</strong>
-            <span><code>slope=0.087867</code>, <code>p-value=0.034340</code>, dominant factor <code>Heat</code>, contribution <code>53.21%</code>.</span>
-          </div>
-          <div>
-            <strong>Final result preserved</strong>
-            <span>The protected trace still records successful completion with <code>reward=1.0</code>.</span>
-          </div>
-          <div>
-            <strong>Watermark inserted</strong>
-            <span>An Env Check records a benign runtime fingerprint before the task workflow.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="resources">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Resources</h2>
-      <div class="columns resource-links">
-        <div class="column"><a href="https://arxiv.org/abs/2606.10813"><strong>Paper</strong><span>arXiv:2606.10813</span></a></div>
-        <div class="column"><a href="https://github.com/XuShuwenn/RedAct"><strong>Code</strong><span><span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> pipeline scripts, detectors, and evaluation harness.</span></a></div>
-        <div class="column"><a href="#"><strong>Benchmark</strong><span>CapTraceBench task metadata, verifiers, and evaluation scripts.</span></a></div>
-        <div class="column"><a href="mailto:sxucn@connect.ust.hk"><strong>Contact</strong><span>For questions about <span class="brand-redact"><span class="brand-red">Red</span><span class="brand-act">Act</span></span> and CapTraceBench.</span></a></div>
-      </div>
+      <div class="case-demo-tabs" id="case-demo-tabs" aria-label="Case demo selector"></div>
+      <div id="case-demo-root"></div>
     </div>
   </section>
 
