@@ -35,8 +35,9 @@ a {
   padding-bottom: 1.5rem;
 }
 
-.publication-title {
+.title.is-1.publication-title {
   font-family: "Google Sans", "Noto Sans", Arial, sans-serif;
+  font-size: 2.45rem;
   font-weight: 700;
   line-height: 1.12;
   margin-bottom: 0;
@@ -307,8 +308,13 @@ figcaption {
   font-size: 0.86rem;
 }
 
+.results-container {
+  max-width: min(1500px, calc(100vw - 2rem)) !important;
+  width: min(1500px, calc(100vw - 2rem));
+}
+
 .main-table-wrap {
-  overflow-x: auto;
+  overflow-x: visible;
   margin: 1.25rem auto 1rem;
   background: #fff;
   border: 1px solid #e4e8ef;
@@ -317,16 +323,16 @@ figcaption {
 }
 
 .main-results-table {
-  width: max-content;
-  min-width: 1100px;
+  width: 100%;
+  min-width: 0;
   border-collapse: collapse;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   line-height: 1.25;
 }
 
 .main-results-table th,
 .main-results-table td {
-  padding: 0.42rem 0.5rem;
+  padding: 0.36rem 0.34rem;
   text-align: center;
   border: 1px solid #e9edf3;
   white-space: nowrap;
@@ -399,6 +405,16 @@ figcaption {
 .main-results-table td.equal-baseline {
   background: #fffaf0;
   color: #8a6421;
+}
+
+@media (max-width: 1180px) {
+  .main-table-wrap {
+    overflow-x: auto;
+  }
+
+  .main-results-table {
+    min-width: 1100px;
+  }
 }
 
 .main-results-table .avg-row td.above-baseline {
