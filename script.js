@@ -61,126 +61,7 @@ const colorMainResultsTable = () => {
 
 colorMainResultsTable();
 
-const caseDemos = [
-  {
-    title: 'Earthquake Phase Association',
-    domain: 'Earth, Climate & Geophysics',
-    taskId: 'earthquake-phase-association',
-    instruction: 'Use `/root/data/wave.mseed` and `/root/data/stations.csv` to group seismic phase picks into earthquake events. Pick P/S waves with SeisBench, associate picks with station metadata, and write `/root/results.csv` with one row per event and an ISO-format `time` column. Evaluation matches predicted event times against a human-labeled catalog within 5 seconds.',
-    keyItems: [
-      'seisbench',
-      'GaMMA',
-      'PhaseNet',
-      'association',
-      'BGMM',
-      'picks DataFrame',
-      'timestamp',
-      'max_sigma11',
-      'oversample_factor',
-      'bfgs_bounds'
-    ],
-    raw: [
-      "Let me start by inspecting the data and installing dependencies in parallel.\n<tool_call name=Bash(command='pip install seisbench 2>&1 | tail -5')>\n<tool_call name=Bash(command='pip install git+https://github.com/wayneweiqiang/GaMMA.git 2>&1 | tail -5')>\n<tool_call name=Bash(command='pip install pyproj 2>&1 | tail -3')>",
-      "Now let me write and run the complete pipeline. I'll use PhaseNet for picking, then GaMMA for association.\n\nimport obspy\nimport seisbench.models as sbm\nfrom gamma.utils import association, estimate_eps\nfrom pyproj import Proj\n\nmodel = sbm.PhaseNet.from_pretrained('original')\npicks_list = model.classify(st, batch_size=64, P_threshold=0.3, S_threshold=0.3)\n# Convert picks to a picks DataFrame with id, timestamp, type, prob, amp.",
-      "config = {\n  'use_dbscan': True,\n  'use_amplitude': True,\n  'vel': {'p': 6.0, 's': 6.0 / 1.75},\n  'min_picks_per_eq': 4,\n  'max_sigma11': 3.0,\n  'max_sigma22': 2.0,\n  'max_sigma12': 2.0,\n  'oversample_factor': 5.0,\n  'bfgs_bounds': ((x_min, x_max), (y_min, y_max), (z_min, z_max), (None, None))\n}\nevents, assignments = association(picks_df, gamma_stations, config, method='BGMM')",
-      "The pipeline is complete: 227 earthquake events were identified and written to `/root/results.csv`. The trace also records PhaseNet thresholds, GaMMA settings, projected station coordinates, and clustering details."
-    ],
-    protected: [
-      { badges: ['watermark', 'rewrite'], content: "=== Task Start ===\nI'll check the available tools, load the waveform and station data, run the picking workflow, associate detections into events, and save the result file." },
-      { badges: ['rewrite'], content: "Let me start by inspecting the data and installing the needed dependencies in parallel.\n<tool_call name=Bash(command='install waveform picking package')>\n<tool_call name=Bash(command='install phase association package')>\n<tool_call name=Bash(command='install coordinate utility')>" },
-      { badges: ['rewrite'], content: "Now let me write and run the complete pipeline. I'll use a pretrained phase picker for arrival detection, then an association method to group picks into events.\n<tool_call name=Write(file_path='/root/pipeline.py', content='implemented a complete workflow to load waveform and station data, prepare station coordinates, run phase picking, associate picks into events, and save the event catalog')>" },
-      { badges: ['rewrite'], content: "The pipeline is complete. The protected trace preserves the audit summary: waveform data and station metadata were loaded, arrival picks were produced, events were associated, and 227 event rows were written to `/root/results.csv`.\n=== Task Done ===" }
-    ]
-  },
-  {
-    title: 'Receipt OCR Statistics',
-    domain: 'Document, Media & Web Intelligence',
-    taskId: 'jpg-ocr-stat',
-    instruction: 'Read scanned receipt images from `/app/workspace/dataset/img`, extract each receipt date and total amount, and write `/app/workspace/stat_ocr.xlsx` with one sheet named `results` and exactly three columns: `filename`, `date`, and `total_amount`.',
-    keyItems: [
-      'pytesseract',
-      'PIL',
-      'Image.open',
-      'ImageFilter',
-      'ImageOps',
-      'GRAND TOTAL',
-      'TOTAL RM',
-      'TOTAL AMOUNT',
-      '--psm 6',
-      'openpyxl'
-    ],
-    raw: [
-      "22 images. Let me examine some of them with OCR to understand the receipt formats.\n\nimport pytesseract\nfrom PIL import Image\nfor f in files[:5]:\n  img = Image.open(path)\n  text = pytesseract.image_to_string(img)\n  print(text)",
-      "I will create `/app/workspace/ocr_extract.py`.\n\nTOTAL_KEYWORDS_PRIORITY = [\n  r'GRAND\\s*TOTAL',\n  r'TOTAL\\s*:?\\s*RM|TOTAL\\s*RM',\n  r'TOTAL\\s*AMOUNT',\n  r'TOTAL\\s*DUE|AMOUNT\\s*DUE|BALANCE\\s*DUE|NETT\\s*TOTAL|NET\\s*TOTAL|TOTAL|AMOUNT'\n]\n\nfrom PIL import Image, ImageFilter, ImageOps\nimport openpyxl",
-      "def preprocess_image(img):\n  img = img.convert('L')\n  img = ImageOps.autocontrast(img, cutoff=2)\n  img = img.filter(ImageFilter.SHARPEN)\n  return img\n\ndef ocr_image(filepath):\n  processed = preprocess_image(Image.open(filepath))\n  return pytesseract.image_to_string(processed, config='--psm 6')",
-      "After inspecting problematic receipts, I rewrote the extraction logic with exclusion patterns for GST summaries, cash/change lines, and subtotals, then wrote the ordered rows into the `results` sheet with openpyxl."
-    ],
-    protected: [
-      { badges: ['watermark', 'rewrite'], content: "=== Task Start ===\nI'll explore the receipt image directory, inspect representative OCR output, build the extraction script, and save the spreadsheet in the required schema." },
-      { badges: ['rewrite'], content: "<tool_call name=Bash(command='run OCR on a first sample batch of images')>\n<tool_call name=Bash(command='run OCR on another sample batch of images')>\n<tool_call name=Bash(command='ran OCR over the remaining receipt images to inspect extracted text')>" },
-      { badges: ['rewrite'], content: "<tool_call name=Write(file_path='/app/workspace/ocr_extract.py', content='implemented a receipt OCR extraction workflow with image preprocessing, total/date extraction rules, and spreadsheet output')>" },
-      { badges: ['rewrite'], content: "The result file was generated at `/app/workspace/stat_ocr.xlsx` with the expected `results` sheet and ordered filename/date/total_amount rows.\n=== Task Done ===" }
-    ]
-  },
-  {
-    title: 'Lake Warming Attribution',
-    domain: 'Earth, Climate & Geophysics',
-    taskId: 'lake-warming-attribution',
-    instruction: 'Use water temperature, climate, land-cover, and hydrology CSV files to produce `trend_result.csv` with slope and p-value, and `dominant_factor.csv` with the most important driver category and its contribution.',
-    keyItems: [
-      'StandardScaler',
-      'LinearRegression',
-      'FactorAnalyzer',
-      'varimax',
-      'scaler.fit_transform',
-      'fa.fit',
-      'fa.transform',
-      'Multiply contributions by 100',
-      'NetRadiation',
-      'Heat'
-    ],
-    raw: [
-      "Planning to use Sen's slope from pymannkendall if available, with fallback to scipy linregress for slope and p-value. Next I will inspect CSV columns and choose the driver variables.",
-      "I am planning to merge all CSVs by Year, analyze water_temperature trends with pymannkendall, and calculate PCA-based driver contributions using climate, hydrology, and land-cover variables grouped into Heat, Flow, Wind, and Human categories.",
-      "from sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom factor_analyzer import FactorAnalyzer\n\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)\nfa = FactorAnalyzer(n_factors=4, rotation='varimax')\nfa.fit(X_scaled)\nscores = fa.transform(X_scaled)\nmodel = LinearRegression()\nmodel.fit(scores, y)\ncategory_contrib_pct = {k: v * 100 for k, v in category_contrib.items()}",
-      "Trend analysis and driver attribution are complete. Wrote `trend_result.csv` with slope=0.087867 and p-value=0.03434. Wrote `dominant_factor.csv`: Heat at 53.21% contribution."
-    ],
-    protected: [
-      { badges: ['watermark', 'rewrite'], content: "=== Task Start ===\n<tool_call name=Bash(...)>" },
-      { badges: ['rewrite'], content: "No additional root-level instruction file was found, so I'll proceed by inspecting the data files and selecting an appropriate trend-analysis approach, with a fallback if needed.\n<tool_call name=Bash(command='inspect the CSV files and preview their columns')>" },
-      { badges: ['rewrite'], content: "<tool_call name=Bash(command='created and ran an analysis script that loads the lake datasets, performs trend analysis, estimates grouped driver contributions, and writes the required CSV outputs')>" },
-      { badges: ['rewrite'], content: "Trend analysis and driver attribution are complete. The protected trace preserves the final audit values: `slope=0.087867`, `p-value=0.03434`, dominant factor `Heat`, contribution `53.21%`.\n=== Task Done ===" }
-    ]
-  },
-  {
-    title: 'Lipinski Ro5 Screening',
-    domain: 'Bioinformatics & Life Sciences',
-    taskId: 'medchem-ro5-pass',
-    instruction: 'Read `/root/input.csv` with molecule IDs and SMILES strings, apply Lipinski Rule of Five with the `medchem` library, and write `/root/output.txt` with PASS/FAIL lines plus a total pass/fail summary.',
-    keyItems: [
-      'import medchem as mc',
-      'mc.rules.basic_rules.rule_of_five',
-      'from rdkit import Chem',
-      'from rdkit.Chem import Descriptors',
-      'Chem.MolFromSmiles',
-      'Descriptors.MolWt',
-      'Descriptors.MolLogP',
-      'Descriptors.NumHDonors',
-      'Descriptors.NumHAcceptors'
-    ],
-    raw: [
-      "I confirmed the Ro5 workflow from the skill. Next I will inspect `/root/input.csv` and run a small Python script to compute MW/LogP/HBD/HBA and format the pass/fail output exactly as requested.\n\nfrom rdkit import Chem\nfrom rdkit.Chem import Descriptors\nmol = Chem.MolFromSmiles(smiles)\nmw = Descriptors.MolWt(mol)\nlogp = Descriptors.MolLogP(mol)\nhbd = Descriptors.NumHDonors(mol)\nhba = Descriptors.NumHAcceptors(mol)",
-      "I will rerun using `medchem` explicitly for the Ro5 pass/fail check.\n\nimport medchem as mc\nro5_pass = mc.rules.basic_rules.rule_of_five(smiles)\nif ro5_pass and not failed:\n  lines.append(f'{mid}: PASS (MW={mw:.2f}, LogP={logp:.2f}, HBD={hbd}, HBA={hba})')",
-      "Completed. I applied Ro5 using the `medchem` library and wrote `/root/output.txt`.\n\nmol001: PASS (MW=180.16, LogP=1.31, HBD=1, HBA=3)\nmol004: FAIL (LogP)\nTotal: 3 pass, 2 fail"
-    ],
-    protected: [
-      { badges: ['rewrite'], content: "I'll process `/root/input.csv` and generate `/root/output.txt` in the exact format specified. First I will inspect the input file, then run a Python script to compute the required properties and format the pass/fail output." },
-      { badges: ['rewrite'], content: "<tool_call name=python content='ran a script to read the CSV, evaluate the required criteria for each molecule, and write formatted results to /root/output.txt'>" },
-      { badges: ['rewrite'], content: "<tool_call name=python content='ran an updated script using the required library for the rule check, kept criterion-specific fail labels, and rewrote /root/output.txt'>" },
-      { badges: ['rewrite'], content: "Completed. The protected trace preserves the final output summary and examples while removing reusable implementation details.\n\nmol001: PASS (MW=180.16, LogP=1.31, HBD=1, HBA=3)\nmol004: FAIL (LogP)\nTotal: 3 pass, 2 fail" }
-    ]
-  }
-];
+let caseDemos = [];
 
 const escapeHtml = (value) => value
   .replaceAll('&', '&amp;')
@@ -204,43 +85,251 @@ const highlightTerms = (text, terms, className) => {
   return html;
 };
 
-const renderTraceMessage = (message, index, keyItems, isProtected) => {
-  const badges = isProtected ? message.badges : [];
-  const classes = ['trace-message'];
-  if (badges.includes('rewrite')) classes.push('is-rewrite');
-  if (badges.includes('watermark')) classes.push('is-watermark');
+const tokenizeWithPositions = (text) => {
+  const tokens = [];
+  const pattern = /\s+|[^\s]+/g;
+  let match;
+  while ((match = pattern.exec(text)) !== null) {
+    tokens.push({
+      value: match[0],
+      start: match.index,
+      end: match.index + match[0].length,
+      isSpace: /^\s+$/.test(match[0]),
+      normalized: match[0].trim().toLowerCase()
+    });
+  }
+  return tokens;
+};
 
-  const icons = badges.map((badge) => {
-    const src = badge === 'watermark' ? 'assets/wmk_icon.png' : 'assets/rewrite_icon.png';
-    const alt = badge === 'watermark' ? 'Watermark injected' : 'Rewritten message';
-    return `<img src="${src}" alt="${alt}" title="${alt}">`;
-  }).join('');
+const tokenIndexesForPhrases = (tokens, text, phrases) => {
+  const indexes = new Set();
+  for (const phrase of phrases) {
+    if (!phrase) continue;
+    let start = text.indexOf(phrase);
+    while (start !== -1) {
+      const end = start + phrase.length;
+      tokens.forEach((token, index) => {
+        if (token.start < end && token.end > start) indexes.add(index);
+      });
+      start = text.indexOf(phrase, end);
+    }
+  }
+  return indexes;
+};
 
-  let content = isProtected
-    ? highlightTerms(message.content, ['=== Task Start ===', '=== Task Done ==='], 'wmk-mark')
-    : highlightTerms(message, keyItems, 'raw-key');
+const renderProtectedContent = (protectedText, rewriteSpans = [], watermarkSpans = []) => {
+  const tokens = tokenizeWithPositions(protectedText);
+  const watermark = tokenIndexesForPhrases(
+    tokens,
+    protectedText,
+    [
+      '=== Task Start ===',
+      '=== Task Done ===',
+      '## Cross-Check',
+      'Cross-check:',
+      'failed due to environment restrictions',
+      'rerunning the required commands with the needed access'
+    ].concat(watermarkSpans)
+  );
+  const rewrite = tokenIndexesForPhrases(tokens, protectedText, rewriteSpans);
+  let hasRewrite = false;
+  const runs = [];
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    let className = '';
+    if (watermark.has(index)) {
+      className = 'wmk-mark';
+    } else if (rewrite.has(index)) {
+      className = 'rewrite-mark';
+      hasRewrite = true;
+    }
 
-  if (isProtected && badges.includes('rewrite')) {
-    content = `<mark class="rewrite-mark">${content}</mark>`;
+    const previous = runs[runs.length - 1];
+    if (previous && previous.className === className) {
+      previous.value += token.value;
+    } else {
+      runs.push({ className, value: token.value });
+    }
   }
 
-  return `
-    <article class="${classes.join(' ')}">
-      <div class="message-meta">
-        <span>Assistant Turn ${index + 1}</span>
-        <span class="message-icons">${icons}</span>
+  const html = runs.map((run) => {
+    const escaped = escapeHtml(run.value);
+    return run.className ? `<mark class="${run.className}">${escaped}</mark>` : escaped;
+  }).join('');
+
+  return { html, hasRewrite, hasWatermark: watermark.size > 0 };
+};
+
+const renderFormattedText = (text, transform) => {
+  const blocks = [];
+  const pattern = /```([\s\S]*?)```/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = pattern.exec(text)) !== null) {
+    const before = text.slice(lastIndex, match.index);
+    if (before.trim()) {
+      blocks.push(`<div class="segment-text">${transform(before)}</div>`);
+    }
+    blocks.push(`<pre class="segment-code"><code>${transform(match[1].trim())}</code></pre>`);
+    lastIndex = match.index + match[0].length;
+  }
+  const after = text.slice(lastIndex);
+  if (after.trim()) {
+    blocks.push(`<div class="segment-text">${transform(after)}</div>`);
+  }
+  return blocks.join('');
+};
+
+const splitAssistantSegments = (text) => {
+  const segments = [];
+  let cursor = 0;
+  while (cursor < text.length) {
+    const start = text.indexOf('<tool_call', cursor);
+    if (start === -1) {
+      const think = text.slice(cursor).trim();
+      if (think) segments.push({ type: 'think', content: think });
+      break;
+    }
+
+    const think = text.slice(cursor, start).trim();
+    if (think) segments.push({ type: 'think', content: think });
+
+    let end = text.indexOf(')>', start);
+    if (end !== -1) {
+      end += 2;
+    } else {
+      end = text.indexOf('>', start);
+      end = end === -1 ? text.length : end + 1;
+    }
+    segments.push({ type: 'tool', content: text.slice(start, end).trim() });
+    cursor = end;
+  }
+  return segments;
+};
+
+const getToolLabel = (toolCall) => {
+  const body = toolCall
+    .replace(/^<tool_call\s+name=/, '')
+    .replace(/>$/, '')
+    .trim();
+  const match = body.match(/^([A-Za-z][A-Za-z0-9_-]*(?:\s+[A-Za-z][A-Za-z0-9_-]*)?)/);
+  return match ? match[1] : 'Tool Call';
+};
+
+const renderToolBody = (toolCall, transform) => {
+  const body = toolCall
+    .replace(/^<tool_call\s+name=/, '')
+    .replace(/>$/, '')
+    .trim();
+  return `<pre class="segment-code tool-code"><code>${transform(body)}</code></pre>`;
+};
+
+const renderAssistantSegment = (segment, index, transform, isProtected, rewriteSpans, watermarkSpans) => {
+  if (segment.type === 'tool') {
+    const protectedRender = isProtected
+      ? renderProtectedContent(segment.content, rewriteSpans, watermarkSpans)
+      : null;
+    const hasRewrite = protectedRender?.hasRewrite ?? false;
+    const hasWatermark = protectedRender?.hasWatermark ?? false;
+    const content = isProtected
+      ? renderToolBody(segment.content, () => protectedRender.html)
+      : renderToolBody(segment.content, transform);
+    return `
+      <div class="trajectory-segment tool-segment${hasRewrite ? ' has-rewrite' : ''}${hasWatermark ? ' has-watermark' : ''}">
+        <div class="segment-head">
+          <span>Tool</span>
+          <strong>${escapeHtml(getToolLabel(segment.content))}</strong>
+          ${hasRewrite ? '<img src="assets/rewrite_icon.png" alt="Rewritten span" title="Rewritten span">' : ''}
+          ${hasWatermark ? '<img src="assets/wmk_icon.png" alt="Watermark injected" title="Watermark injected">' : ''}
+        </div>
+        ${content}
       </div>
-      <pre class="message-content">${content}</pre>
+    `;
+  }
+
+  const protectedRender = isProtected
+    ? renderProtectedContent(segment.content, rewriteSpans, watermarkSpans)
+    : null;
+  const hasRewrite = protectedRender?.hasRewrite ?? false;
+  const hasWatermark = protectedRender?.hasWatermark ?? false;
+  const content = isProtected
+    ? `<div class="segment-text">${protectedRender.html}</div>`
+    : renderFormattedText(segment.content, transform);
+
+  return `
+    <div class="trajectory-segment think-segment${hasRewrite ? ' has-rewrite' : ''}${hasWatermark ? ' has-watermark' : ''}">
+      <div class="segment-head">
+        <span>Think</span>
+        <strong>Reasoning</strong>
+        ${hasRewrite ? '<img src="assets/rewrite_icon.png" alt="Rewritten span" title="Rewritten span">' : ''}
+        ${hasWatermark ? '<img src="assets/wmk_icon.png" alt="Watermark injected" title="Watermark injected">' : ''}
+      </div>
+      ${content}
+    </div>
+  `;
+};
+
+const cleanOutputText = (text) => text
+  .replace(/^<tool_result>/, '')
+  .replace(/<\/tool_result>$/, '')
+  .replace(/<system-reminder>[\s\S]*?<\/system-reminder>/g, '')
+  .trim();
+
+const renderOutputSegment = (turn, index) => `
+  <article class="trajectory-turn output-turn">
+    <div class="turn-meta">Output ${index + 1}</div>
+    <div class="trajectory-segment output-segment">
+      <div class="segment-head"><span>Output</span><strong>Tool Result</strong></div>
+      ${renderFormattedText(cleanOutputText(turn.content), escapeHtml)}
+    </div>
+  </article>
+`;
+
+const renderTrajectoryTurn = (turn, index, keyItems, isProtected) => {
+  if (turn.role !== 'assistant') return renderOutputSegment(turn, index);
+
+  const rewriteSpans = turn.rewriteSpans ?? [];
+  const watermarkSpans = turn.watermarkSpans ?? [];
+  const transform = isProtected
+    ? (value) => renderProtectedContent(value, rewriteSpans, watermarkSpans).html
+    : (value) => highlightTerms(value, keyItems, 'raw-key');
+  const segments = splitAssistantSegments(turn.content);
+  return `
+    <article class="trajectory-turn assistant-turn">
+      <div class="turn-meta">Assistant Turn ${index + 1}</div>
+      ${segments.map((segment, segmentIndex) => renderAssistantSegment(
+        segment,
+        segmentIndex,
+        transform,
+        isProtected,
+        rewriteSpans,
+        watermarkSpans
+      )).join('')}
     </article>
   `;
+};
+
+const renderTrajectory = (turns, keyItems, isProtected) => {
+  return turns.map((turn, index) => renderTrajectoryTurn(
+    turn,
+    index,
+    keyItems,
+    isProtected
+  )).join('');
 };
 
 const renderCaseDemo = (activeIndex = 0) => {
   const tabs = document.getElementById('case-demo-tabs');
   const root = document.getElementById('case-demo-root');
   if (!tabs || !root) return;
+  if (!caseDemos.length) {
+    tabs.innerHTML = '';
+    root.innerHTML = '<div class="case-demo-loading">Loading trajectory demos...</div>';
+    return;
+  }
 
   const demo = caseDemos[activeIndex];
+  const rawHighlightTerms = [...new Set([...(demo.keyItems ?? []), ...(demo.rawKeyHits ?? [])])];
 
   tabs.innerHTML = caseDemos.map((item, index) => `
     <button class="case-demo-tab${index === activeIndex ? ' is-active' : ''}" type="button" data-demo-index="${index}">
@@ -253,7 +342,7 @@ const renderCaseDemo = (activeIndex = 0) => {
       <div class="case-demo-hero">
         <span class="case-demo-kicker">${escapeHtml(demo.domain)} / ${escapeHtml(demo.taskId)}</span>
         <h3>${escapeHtml(demo.title)}</h3>
-        <p>Raw trace exposes concrete reusable procedure; protected trace preserves the audit story while abstracting implementation details and provenance hooks.</p>
+        <span class="watermark-type-badge">${escapeHtml(demo.watermarkType)} Watermark</span>
       </div>
       <div class="case-demo-meta">
         <article class="case-info-card">
@@ -272,7 +361,7 @@ const renderCaseDemo = (activeIndex = 0) => {
             <span class="trace-pill raw">Key item</span>
           </div>
           <div class="trace-list">
-            ${demo.raw.map((message, index) => renderTraceMessage(message, index, demo.keyItems, false)).join('')}
+            ${renderTrajectory(demo.raw, rawHighlightTerms, false)}
           </div>
         </section>
         <section class="trace-column protected-trajectory">
@@ -284,7 +373,7 @@ const renderCaseDemo = (activeIndex = 0) => {
             </div>
           </div>
           <div class="trace-list">
-            ${demo.protected.map((message, index) => renderTraceMessage(message, index, demo.keyItems, true)).join('')}
+            ${renderTrajectory(demo.protected, demo.keyItems, true)}
           </div>
         </section>
       </div>
@@ -298,4 +387,20 @@ const renderCaseDemo = (activeIndex = 0) => {
   });
 };
 
+const loadCaseDemos = async () => {
+  try {
+    const response = await fetch('assets/demo_cases.json?v=manual-rewrite-v3-20260611', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    caseDemos = await response.json();
+    renderCaseDemo();
+  } catch (error) {
+    const root = document.getElementById('case-demo-root');
+    if (root) {
+      root.innerHTML = '<div class="case-demo-loading">Trajectory demos could not be loaded.</div>';
+    }
+    console.error('Failed to load demo cases:', error);
+  }
+};
+
 renderCaseDemo();
+loadCaseDemos();
